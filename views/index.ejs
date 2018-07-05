@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Node.JS Email application</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+	</script>
+
+	<script>// <![CDATA[
+
+		$(document).ready(function(){
+		    var from,to,subject,text;
+		    $("#send_email").click(function(){     
+		        to=$("#to").val() ;
+		        subject=$("#subject").val() ;
+		        text=$("#content").val() ;
+		        filename = $('#getFile').val() ;
+		        //attachments=$("#getFile").file;
+		        filePath = "‪D:/GoogleDrive/Twitter.txt" ;
+		        attachments=document.getElementById('getFile').files[0];
+		        $("#message").text("Sending E-mail...Please wait") ;
+		        $.get("http://localhost:3000/send",{to:to, subject:subject, text:text, filename:filename, filePath:filePath}, function(data){
+		        if(data=="sent")
+		        {
+		            $("#message").empty().html("Email is been sent at " + to + " . Please check inbox!") ;
+		        }
+
+				}) ;
+		    }) ;
+		}) ;
+	</script>
+</head>
+<body>
+	<div id="container">
+		<h1>Mailer In Node.JS</h1>
+		
+		<input id="to" type="text" placeholder="Email" /><br>
+		<input id="subject" type="text" placeholder="Subject" /><br>
+		<input id="getFile" type="file" placeholder="Upload file" /><br>
+		<textarea id="content" cols="40" rows="5" placeholder="Body for optional text">
+		</textarea>
+
+		<button id="send_email">Send</button>
+		<span id="message"></span>
+
+		<!--<form action="/send" method="get">
+
+		<input id="to" type="text" placeholder="Email" /><br>
+		<input id="subject" type="text" placeholder="Subject" /><br>
+		<textarea id="content" cols="40" rows="5" placeholder="Body">
+		</textarea>
+
+		<input id="send_email" type="submit" value="SEND">
+
+		</form>-->
+	</div>
+</body>
+</html>
+
